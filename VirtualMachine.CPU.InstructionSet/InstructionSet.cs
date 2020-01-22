@@ -21,6 +21,8 @@ namespace VirtualMachine.CPU.InstructionSet
 
         public InstructionSet()
         {
+            AddInstruction(new Exit());
+
             foreach (var from in Readable)
             foreach (var to in Writable)
             { 
