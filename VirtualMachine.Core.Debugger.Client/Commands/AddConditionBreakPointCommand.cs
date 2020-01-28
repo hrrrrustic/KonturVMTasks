@@ -14,17 +14,7 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
     {
         public string Name { get; } = "bp-add-c";
         public string Info { get; } = "Add break point with condition";
-        public IReadOnlyList<string> ParameterNames { get; } = new[] { "name","condition"};
-
-        private readonly Dictionary<string, Func<Word, Word, bool>> supportedConditions = new Dictionary<string, Func<Word, Word, bool>>
-        {
-            [">"] = (x, y) => x.ToUInt() > y.ToUInt(),
-            ["<"] = (x, y) => x.ToUInt() < y.ToUInt(),
-            [">="] = (x, y) => x.ToUInt() >= y.ToUInt(),
-            ["<="] = (x, y) => x.ToUInt() <= y.ToUInt(),
-            ["=="] = (x, y) => x.ToUInt() == y.ToUInt(),
-            ["!="] = (x, y) => x.ToUInt() != y.ToUInt(),
-        };
+        public IReadOnlyList<string> ParameterNames { get; } = new[] { "name", "address", "condition"};
 
         private readonly Dictionary<string, string> reverseOperations = new Dictionary<string, string>
         {
@@ -39,6 +29,7 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
         {
             ConditionBreakPointDto dto = ParseCondition(parameters[2], "mem");
             dto.Name = parameters[0];
+            dto.Address = uint.Parse(parameters[1]);
 
             return model.Client.AddConditionBreakPointAsync(dto);
         }
@@ -56,10 +47,10 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
             {
                 return new ConditionBreakPointDto
                 { 
-                    FirstArgument = firstValue,
+                    Address = firstValue,
                     IsDoubleMemoryAddressed = true,
-                    SecondArgument = secondValue,
-                    Condition = supportedConditions[splitResult[1]]
+                    Argument = secondValue,
+                    ComparisonOperator = splitResult[1]
                 };
             }
 
@@ -67,10 +58,10 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
             {
                 return new ConditionBreakPointDto
                 {
-                    FirstArgument = firstValue,
-                    SecondArgument = secondValue,
+                    Address = firstValue,
+                    Argument = secondValue,
                     IsDoubleMemoryAddressed = false,
-                    Condition = supportedConditions[splitResult[1]]
+                    ComparisonOperator = splitResult[1]
                 };
             }
 
@@ -78,10 +69,10 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
 
             return new ConditionBreakPointDto
             {
-                Condition = supportedConditions[reverseStringOperator],
-                FirstArgument = secondValue,
-                SecondArgument = firstValue,
+                Address = secondValue,
+                Argument = firstValue,
                 IsDoubleMemoryAddressed = false,
+                ComparisonOperator = reverseStringOperator
             };
         }
 
