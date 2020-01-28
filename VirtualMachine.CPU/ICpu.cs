@@ -8,5 +8,6 @@ namespace VirtualMachine.CPU
         TimeSpan StepDelay { get; set; }
         Word InstructionPointer { get; set; }
         void Stop();
+        void Sleep(int sleepTimeInMilliseconds);
     }
 }

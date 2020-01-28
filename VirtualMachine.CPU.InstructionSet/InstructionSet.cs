@@ -23,6 +23,8 @@ namespace VirtualMachine.CPU.InstructionSet
         {
             AddInstruction(new Exit());
 
+            AddInstruction(new Sleep(OperandType.Constant));
+
             foreach (var from in Readable)
             foreach (var to in Writable)
             { 

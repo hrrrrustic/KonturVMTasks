@@ -9,7 +9,7 @@ namespace VirtualMachine.CPU
     {
         private static readonly Word InstructionPointerAddress = Word.Zero;
         private bool StopFlag { get; set; } = false;
-
+        private int SleepTime { get; set; } = 0;
         public Cpu(IInstructionSet instructionSet, ISupervisor supervisor)
         {
             this.instructionSet = instructionSet;
@@ -31,6 +31,11 @@ namespace VirtualMachine.CPU
             StopFlag = true;
         }
 
+        public void Sleep(int sleepTimeInMilliseconds)
+        {
+            SleepTime = sleepTimeInMilliseconds;
+        }
+
         public void Run(IMemory memory)
         {
             if (Interlocked.CompareExchange(ref this.memory, memory, null) != null)
@@ -38,9 +43,20 @@ namespace VirtualMachine.CPU
 
             while (!StopFlag)
             {
-                Step();
-                Thread.Sleep(StepDelay);
+                RunStep();
             }
+        }
+
+        private void RunStep()
+        {
+            if (SleepTime != 0)
+            {
+                Thread.Sleep(SleepTime);
+                SleepTime = 0;
+            }
+
+            Step();
+            Thread.Sleep(StepDelay);
         }
 
         private void Step()
