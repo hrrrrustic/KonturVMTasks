@@ -47,9 +47,9 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
             {
                 return new ConditionBreakPointDto
                 { 
-                    Address = firstValue,
                     IsDoubleMemoryAddressed = true,
-                    Argument = secondValue,
+                    FirstArgument = firstValue,
+                    SecondArgument = secondValue,
                     ComparisonOperator = splitResult[1]
                 };
             }
@@ -58,8 +58,8 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
             {
                 return new ConditionBreakPointDto
                 {
-                    Address = firstValue,
-                    Argument = secondValue,
+                    FirstArgument = firstValue,
+                    SecondArgument = secondValue,
                     IsDoubleMemoryAddressed = false,
                     ComparisonOperator = splitResult[1]
                 };
@@ -69,8 +69,8 @@ namespace VirtualMachine.Core.Debugger.Client.Commands
 
             return new ConditionBreakPointDto
             {
-                Address = secondValue,
-                Argument = firstValue,
+                FirstArgument = secondValue,
+                SecondArgument = firstValue,
                 IsDoubleMemoryAddressed = false,
                 ComparisonOperator = reverseStringOperator
             };

@@ -14,8 +14,8 @@ namespace VirtualMachine.Core.Debugger.Server.BreakPoints
 
         public IBreakPoint FromDto(ConditionBreakPointDto dto)
         {
-            return new ConditionBreakPoint(new Word(dto.Address),  new Word(dto.Argument),
-                dto.IsDoubleMemoryAddressed, dto.Name, dto.ComparisonOperator);
+            return new ConditionBreakPoint(new Word(dto.Address), dto.Name, new Word(dto.FirstArgument),
+                new Word(dto.SecondArgument), dto.ComparisonOperator, dto.IsDoubleMemoryAddressed);
         }
 
 		public BreakPointDto ToDto(IBreakPoint bp)
@@ -41,56 +41,45 @@ namespace VirtualMachine.Core.Debugger.Server.BreakPoints
 		}
 		public class ConditionBreakPoint : IBreakPoint
         {
+            private readonly Dictionary<string, Func<Word, Word, bool>> supportedConditions = new Dictionary<string, Func<Word, Word, bool>>
+            {
+                [">"] = (x, y) => x.ToUInt() > y.ToUInt(),
+                ["<"] = (x, y) => x.ToUInt() < y.ToUInt(),
+                [">="] = (x, y) => x.ToUInt() >= y.ToUInt(),
+                ["<="] = (x, y) => x.ToUInt() <= y.ToUInt(),
+                ["=="] = (x, y) => x.ToUInt() == y.ToUInt(),
+                ["!="] = (x, y) => x.ToUInt() != y.ToUInt(),
+            };
             public Word Address { get; }
             public string Name { get; }
 
-            public Word Argument { get; }
+            public Word FirstArgument { get; }
+            public Word SecondArgument { get; }
 
-			public string ComparisonOperator { get; }
+            public string ComparisonOperator { get; }
 
             public bool IsDoubleAddressed { get;}
 
-            public ConditionBreakPoint(Word address, Word argument, bool isDoubleAddressed, string name, string comparisonOperator)
+            public ConditionBreakPoint(Word address, string name, Word firstArgument, Word secondArgument, string comparisonOperator, bool isDoubleAddressed)
             {
                 Address = address;
-                Argument= argument;
                 Name = name;
+                FirstArgument = firstArgument;
+                SecondArgument = secondArgument;
                 ComparisonOperator = comparisonOperator;
                 IsDoubleAddressed = isDoubleAddressed;
-
             }
             public bool ShouldStop(IReadOnlyMemory memory)
             {
-                Word firstValue = memory.ReadWord(Address);
-                Word secondValue = IsDoubleAddressed ? memory.ReadWord(Argument) : Argument;
+                Word firstValue = memory.ReadWord(FirstArgument);
+                Word secondValue = IsDoubleAddressed ? memory.ReadWord(SecondArgument) : SecondArgument;
 
                 return ConditionResult(firstValue, secondValue, ComparisonOperator);
             }
 
             private bool ConditionResult(Word first, Word second, string operation)
             {
-                return ConditionResult(first.ToUInt(), second.ToUInt(), operation);
-            }
-
-            private bool ConditionResult(uint first, uint second, string operation)
-            {
-                switch (operation)
-                {
-                    case ">":
-                        return first > second;
-                    case ">=":
-                        return first >= second;
-                    case "<":
-                        return first < second;
-                    case "<=":
-                        return first <= second;
-                    case "==":
-                        return first == second;
-                    case "!=":
-                        return first != second;
-                    default:
-                        throw new NotSupportedException();
-                }
+                return supportedConditions[operation].Invoke(first, second);
             }
         }
     }

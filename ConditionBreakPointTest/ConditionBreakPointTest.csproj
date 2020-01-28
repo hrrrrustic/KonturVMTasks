@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualMachine.Core.Debugger.Client\VirtualMachine.Core.Debugger.Client.csproj" />
+    <ProjectReference Include="..\VirtualMachine.Core.Debugger.Server\VirtualMachine.Core.Debugger.Server.csproj" />
   </ItemGroup>
 
 </Project>
