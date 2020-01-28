@@ -15,6 +15,8 @@ namespace VirtualMachine.Core.Debugger.Client
         public Task SetDebugModeAsync(DebugMode mode) => Post("SetDebugMode", mode);
 
         public Task AddBreakPointAsync(BreakPointDto bp) => Post("AddBreakPoint", bp);
+        public Task AddConditionBreakPointAsync(ConditionBreakPointDto cbp) => Post("AddConditionBreakPoint", cbp);
+
         public Task RemoveBreakPointAsync(string name) => Post("RemoveBreakPoint", name);
         public Task<BreakPointDto[]> GetBreakPointsAsync() => Get<BreakPointDto[]>("GetBreakPoints");
 

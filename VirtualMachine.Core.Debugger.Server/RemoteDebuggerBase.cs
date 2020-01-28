@@ -17,6 +17,8 @@ namespace VirtualMachine.Core.Debugger.Server
 			server.AddHandler("SetDebugMode", HttpMethod.Post, (Action<JToken>) SetDebugMode);
 
 			server.AddHandler("AddBreakPoint", HttpMethod.Post, (Action<JToken>) AddBreakPoint);
+            server.AddHandler("AddConditionBreakPoint", HttpMethod.Post, (Action<JToken>)AddConditionBreakPoint);
+
 			server.AddHandler("RemoveBreakPoint", HttpMethod.Post, (Action<JToken>) RemoveBreakPoint);
 			server.AddHandler("GetBreakPoints", HttpMethod.Get, (Func<JToken>) GetBreakPoints);
 
@@ -39,6 +41,8 @@ namespace VirtualMachine.Core.Debugger.Server
 
 		private void AddBreakPoint(JToken bp) => BreakPoints.Add(BreakPointsConverter.FromDto(bp.ToObject<BreakPointDto>()));
 
+        private void AddConditionBreakPoint(JToken cbp) =>
+            BreakPoints.Add(BreakPointsConverter.FromDto(cbp.ToObject<ConditionBreakPointDto>()));
 		private void RemoveBreakPoint(JToken bp) => BreakPoints.Remove(BreakPoints.Find(bp.ToObject<string>()));
 		private JToken GetBreakPoints()
 		{

@@ -17,13 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Debugger.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Debugger.Client.Console", "VirtualMachine.Debugger.Client.Console\VirtualMachine.Debugger.Client.Console.csproj", "{45A41CBD-ACC8-4A81-800B-275C03852C5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualMachine.Periphery.Terminal", "VirtualMachine.Periphery.Terminal\VirtualMachine.Periphery.Terminal.csproj", "{8AAEA07B-EDA3-4F01-9336-228A1352982F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Periphery.Terminal", "VirtualMachine.Periphery.Terminal\VirtualMachine.Periphery.Terminal.csproj", "{8AAEA07B-EDA3-4F01-9336-228A1352982F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Core.Debugger", "VirtualMachine.Core.Debugger\VirtualMachine.Core.Debugger.csproj", "{02962D3E-E66D-4B7F-8CB1-B0392745672E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualMachine.Core.Debugger.Client", "VirtualMachine.Core.Debugger.Client\VirtualMachine.Core.Debugger.Client.csproj", "{E8E073DC-F03D-4433-8ED9-8C41DA7EF222}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Core.Debugger.Client", "VirtualMachine.Core.Debugger.Client\VirtualMachine.Core.Debugger.Client.csproj", "{E8E073DC-F03D-4433-8ED9-8C41DA7EF222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualMachine.Core.Debugger.Server", "VirtualMachine.Core.Debugger.Server\VirtualMachine.Core.Debugger.Server.csproj", "{CD1116D5-9BC1-44FA-9088-EF5C9A950AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualMachine.Core.Debugger.Server", "VirtualMachine.Core.Debugger.Server\VirtualMachine.Core.Debugger.Server.csproj", "{CD1116D5-9BC1-44FA-9088-EF5C9A950AF2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConditionBreakPointTest", "ConditionBreakPointTest\ConditionBreakPointTest.csproj", "{5860C868-FE0D-491B-B5E8-6F44345161B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{CD1116D5-9BC1-44FA-9088-EF5C9A950AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD1116D5-9BC1-44FA-9088-EF5C9A950AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD1116D5-9BC1-44FA-9088-EF5C9A950AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5860C868-FE0D-491B-B5E8-6F44345161B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5860C868-FE0D-491B-B5E8-6F44345161B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5860C868-FE0D-491B-B5E8-6F44345161B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5860C868-FE0D-491B-B5E8-6F44345161B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
